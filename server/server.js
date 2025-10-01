@@ -36,9 +36,13 @@ app.use(cors());
 app.use('/api/status', async (req, res) => res.send('Server is live'));
 app.use('/api/auth', userRouter);
 app.use('/api/messages', messageRouter);
-
-const PORT = process.env.PORT || 3000;
 await connectDb();
-server.listen(PORT, () => {
-  console.log('Server is listening on port ', PORT);
-});
+
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 3000;
+  server.listen(PORT, () => {
+    console.log('Server is listening on port ', PORT);
+  });
+}
+
+export default server;
